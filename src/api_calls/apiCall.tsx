@@ -14,10 +14,12 @@ interface GetGameResultAPIResponse{
         transitions: {nextPositions: number[], positions: number[], probability: number}[]
     }[];
 }
+const server_url_local = "http://localhost:8080";
+const server_url = "http://gamesolverbackend-env.eba-mp3wghug.us-east-2.elasticbeanstalk.com";
 
 export async function getGameResult(): Promise<GetGameResultResponse> {
     try {
-        const response = await fetch("http://localhost:8080/api/game_result", {
+        const response = await fetch(`${server_url}/api/game_result`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",

@@ -14,12 +14,13 @@ function App() {
   const [policies, setPolicies] = useState<PoliciesGivenOpponentPosition[][]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [positionsForAllPlayers, setPositionsForAllPlayers] = useState<[number, number][][]>([[], []]);
+  const [message, setMessage] = useState<string>("");
 
 
   const handleButtonClick = async () => {
     console.log("click");
     setLoading(true);
-    let {arrows, policies, positionsForAllPlayers} = await getGameResult();
+    let {arrows, policies, positionsForAllPlayers} = await getGameResult((message) => setMessage(message));
     console.log(arrows)
     setArrows(arrows);
     setPolicies(policies);
@@ -39,7 +40,7 @@ function App() {
         <OptimalPolicyPage policies={policies} />
       </div>
       }
-      {loading && <LoadingPage/>}
+      {loading && <LoadingPage content={message}/>}
       {/* <NodesGraph rows={9} cols={9} spacing={100}/> */}
     </div>
   );

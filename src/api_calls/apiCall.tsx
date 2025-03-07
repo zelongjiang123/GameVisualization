@@ -15,7 +15,7 @@ interface GetGameResultAPIResponse{
     }[];
 }
 const server_url_local = "http://localhost:8080";
-const server_url = "http://gamesolverbackend-env.eba-mp3wghug.us-east-2.elasticbeanstalk.com";
+const server_url = "https://gamesolverbackend-env.eba-mp3wghug.us-east-2.elasticbeanstalk.com";
 
 export async function getGameResult(): Promise<GetGameResultResponse> {
     try {

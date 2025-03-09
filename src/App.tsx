@@ -8,6 +8,8 @@ import { getGameResult } from './api_calls/apiCall';
 import { Arrow, PoliciesGivenOpponentPosition } from './components/configs';
 import LoadingPage from './pages/loading_page/LoadingPage';
 import GameAnimationPage from './pages/game_animation_page/GameAnimationPage';
+import GameInput from './components/GameInput';
+import { GameInputContext } from './contexts/GameInputContext';
 
 function App() {
   const [arrows, setArrows] = useState<Arrow[][]>([]);
@@ -16,11 +18,17 @@ function App() {
   const [positionsForAllPlayers, setPositionsForAllPlayers] = useState<[number, number][][]>([[], []]);
   const [message, setMessage] = useState<string>("");
 
+   const initialMatrix = Array(3)
+      .fill(null)
+      .map(() => Array(3).fill([0, 0]));
+  
+    const [rewardMatrix, setRewardMatrix] = useState<number[][][]>(initialMatrix);
+
 
   const handleButtonClick = async () => {
     console.log("click");
     setLoading(true);
-    let {arrows, policies, positionsForAllPlayers} = await getGameResult((message) => setMessage(message));
+    let {arrows, policies, positionsForAllPlayers} = await getGameResult(rewardMatrix, (message) => setMessage(message));
     console.log(arrows)
     setArrows(arrows);
     setPolicies(policies);
@@ -35,6 +43,10 @@ function App() {
         <div>
         <button onClick={()=>{handleButtonClick();}}>Fetch Data</button>
         </div>
+        <GameInputContext.Provider value={{rewardMatrix, setRewardMatrixCallback: (matrix) => setRewardMatrix(matrix)}}>
+          <GameInput/>
+        </GameInputContext.Provider>
+        
         <GameAnimationPage positions1={positionsForAllPlayers[0]} positions2={positionsForAllPlayers[1]}/>
         <OptimalStrategyPage arrows={arrows}/>
         <OptimalPolicyPage policies={policies} />

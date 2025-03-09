@@ -27,6 +27,7 @@ function App() {
 
   const handleButtonClick = async () => {
     console.log("click");
+    setMessage("");
     setLoading(true);
     let {arrows, policies, positionsForAllPlayers} = await getGameResult(rewardMatrix, (message) => setMessage(message));
     console.log(arrows)

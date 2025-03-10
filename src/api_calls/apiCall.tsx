@@ -5,6 +5,7 @@ interface GetGameResultResponse {
     arrows: Arrow[][];
     policies: PoliciesGivenOpponentPosition[][];
     positionsForAllPlayers: [number, number][][];
+    arrowsJointPolicy: Arrow[][][],
 }
 
 interface GetGameResultAPIResponse {
@@ -28,7 +29,7 @@ export async function getGameResult(rewardMatrix: number[][][], onMessage: (mess
              * the url because it might be too long. Therefore, it needs to call the start_game (POST) first,
              * and then call the game_result (GET)
              */
-            
+
             const response = await fetch(`${server_url_local}/api/start_game`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -45,6 +46,7 @@ export async function getGameResult(rewardMatrix: number[][][], onMessage: (mess
                 arrows: [],
                 policies: [],
                 positionsForAllPlayers: [],
+                arrowsJointPolicy: [],
             };
 
             eventSource.onmessage = (event) => {
@@ -104,7 +106,24 @@ export async function getGameResult(rewardMatrix: number[][][], onMessage: (mess
                             }
                         }
 
-                        result = { arrows, policies: [policyListPlayer1, policyListPlayer2], positionsForAllPlayers };
+                        
+                        let arrowsJointPolicy: Arrow[][][] = [];
+                        if(parsedResponse.jointPolicies !== undefined){
+                            let jointPolicies = parsedResponse.jointPolicies;
+                            for(let i=0; i<jointPolicies.length; i++){
+                                let policies: Arrow[][] = [];
+                                for(const transitionList of jointPolicies[i].transitions){
+                                    let transitions: Arrow[] = [];
+                                    for(const transition of transitionList){
+                                        transitions.push({fromRow: transition.positions[0], fromCol: transition.positions[1], toRow: transition.nextPositions[0], toCol: transition.nextPositions[1], probability: transition.probability});
+                                    }
+                                    policies.push(transitions);
+                                }
+                                arrowsJointPolicy.push(policies);
+                            }
+                        }
+
+                        result = { arrows, policies: [policyListPlayer1, policyListPlayer2], positionsForAllPlayers, arrowsJointPolicy };
                     }
                 } catch (error) {
                     console.error("Error parsing SSE message:", error);

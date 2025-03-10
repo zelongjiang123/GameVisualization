@@ -10,9 +10,11 @@ import LoadingPage from './pages/loading_page/LoadingPage';
 import GameAnimationPage from './pages/game_animation_page/GameAnimationPage';
 import GameInput from './components/GameInput';
 import { GameInputContext } from './contexts/GameInputContext';
+import JointPolicyPage from './pages/joint_policy_page/JointPolicyPage';
 
 function App() {
   const [arrows, setArrows] = useState<Arrow[][]>([]);
+  const [arrowsJointPolicy, setArrowsJointPolicy] = useState<Arrow[][][]>([]);
   const [policies, setPolicies] = useState<PoliciesGivenOpponentPosition[][]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [positionsForAllPlayers, setPositionsForAllPlayers] = useState<[number, number][][]>([[], []]);
@@ -29,11 +31,12 @@ function App() {
     console.log("click");
     setMessage("");
     setLoading(true);
-    let {arrows, policies, positionsForAllPlayers} = await getGameResult(rewardMatrix, (message) => setMessage(message));
+    let {arrows, policies, positionsForAllPlayers, arrowsJointPolicy} = await getGameResult(rewardMatrix, (message) => setMessage(message));
     console.log(arrows)
     setArrows(arrows);
     setPolicies(policies);
     setPositionsForAllPlayers(positionsForAllPlayers);
+    setArrowsJointPolicy(arrowsJointPolicy);
     setLoading(false);
   }
 
@@ -50,6 +53,7 @@ function App() {
         
         <GameAnimationPage positions1={positionsForAllPlayers[0]} positions2={positionsForAllPlayers[1]}/>
         <OptimalStrategyPage arrows={arrows}/>
+        <JointPolicyPage arrows={arrowsJointPolicy}/>
         <OptimalPolicyPage policies={policies} />
       </div>
       }

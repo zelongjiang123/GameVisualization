@@ -16,7 +16,7 @@ interface GetGameResultAPIResponse {
     }[];
 }
 const server_url_local = "http://localhost:8080";
-const server_url = "http://gamesolverbackend-env.eba-mp3wghug.us-east-2.elasticbeanstalk.com";
+const server_url = "https://www.zelongjiang.cc";
 
 export async function getGameResult(rewardMatrix: number[][][], onMessage: (message: string) => void): Promise<GetGameResultResponse> {
 

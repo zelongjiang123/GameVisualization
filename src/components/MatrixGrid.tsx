@@ -134,7 +134,7 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
       // Apply nudge if the position has already been used
       if(isApplyNudge){
         ({ x1, y1, x2, y2} = applyNudge(x1, y1, x2, y2, 10, usedPositions));
-        console.log(usedPositions);
+        // console.log(usedPositions);
       }
         
 

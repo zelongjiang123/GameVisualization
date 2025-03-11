@@ -40,7 +40,9 @@ export async function getGameResult(rewardMatrix: number[][][], onMessage: (mess
                 reject(response.statusText);
             }
 
-            const eventSource = new EventSource(`${server_url_local}/api/game_result`);
+            const sessionId = await response.text();
+
+            const eventSource = new EventSource(`${server_url_local}/api/game_result?sessionId=${sessionId}`);
 
             let result: GetGameResultResponse = {
                 arrows: [],

@@ -38,7 +38,7 @@ const OptimalPolicyPage: React.FC<OptimalPolicyPageProps> = ({
 }) => {
   return (
     <div className="optimal-strategyPage">
-      <h1>Optimal Policy</h1>
+      <h1>Optimal Strategy</h1>
       <div>
         {
         policies.map((policy, index)=>{

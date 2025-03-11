@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import "./GameInput.less"
 import { GameInputContext } from "../contexts/GameInputContext";
 
 const GameInput: React.FC = () => {
@@ -16,27 +17,12 @@ const GameInput: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        maxWidth: "300px",
-        margin: "auto",
-      }}
-    >
+    <div className="game-input">
       {context.rewardMatrix.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <div
             key={`${rowIndex}-${colIndex}`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "10px",
-              border: "1px solid black",
-              minWidth: "80px",
-              textAlign: "center",
-            }}
+            className="game-input-content"
           >
             <input
               type="number"

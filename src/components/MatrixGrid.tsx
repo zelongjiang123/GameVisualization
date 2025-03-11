@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './index.less';
+import './MatrixGrid.less';
 import { Arrow, HighlightCell, player1Color, player2Color } from "./configs";
 
 type MatrixGridProps = {

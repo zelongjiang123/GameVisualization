@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 const GRID_SIZE = 3;
 const CELL_SIZE = 100;
 const DOT_RADIUS = 10;
-const DEFAULT_SPEED = 1.5; // Default animation duration in ms
+const DEFAULT_SPEED = 1; // Default animation duration in ms
 
 interface GameAnimationProps{
   positions1: [number, number][], 

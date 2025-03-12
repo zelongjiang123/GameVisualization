@@ -16,7 +16,7 @@ interface GetGameResultAPIResponse {
     }[];
 }
 const server_url_local = "http://localhost:8080";
-const server_url = "https://www.zelongjiang.cc";
+const server_url = "https://game-solver-backend.onrender.com";
 
 export async function getGameResult(rewardMatrix: number[][][], crashValue: number, discountRate: number, onMessage: (message: string) => void): Promise<GetGameResultResponse> {
 

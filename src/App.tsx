@@ -25,13 +25,15 @@ function App() {
       .map(() => Array(3).fill([0, 0]));
   
     const [rewardMatrix, setRewardMatrix] = useState<number[][][]>(initialMatrix);
+    const [crashValue, setCrashValue] = useState<number>(10);
+    const [discountRate, setDiscountRate] = useState<number>(0.9);
 
 
   const handleButtonClick = async () => {
     console.log("click");
     setMessage("");
     setLoading(true);
-    let {arrows, policies, positionsForAllPlayers, arrowsJointPolicy} = await getGameResult(rewardMatrix, (message) => setMessage(message));
+    let {arrows, policies, positionsForAllPlayers, arrowsJointPolicy} = await getGameResult(rewardMatrix, crashValue, discountRate, (message) => setMessage(message));
     console.log(arrows)
     setArrows(arrows);
     setPolicies(policies);
@@ -44,12 +46,14 @@ function App() {
     <div className="App">
       { !loading && 
       <div className='content'>
-        <div>
-        <button onClick={()=>{handleButtonClick();}}>Fetch Data</button>
-        </div>
-        <GameInputContext.Provider value={{rewardMatrix, setRewardMatrixCallback: (matrix) => setRewardMatrix(matrix)}}>
+        
+        <GameInputContext.Provider value={{rewardMatrix, setRewardMatrixCallback: (matrix) => setRewardMatrix(matrix), crashValue, setCrashValueCallback: (value) => setCrashValue(value), discountRate, setDiscountRateCallback: (value) => setDiscountRate(value)}}>
           <GameInput/>
         </GameInputContext.Provider>
+
+        <div>
+          <button onClick={()=>{handleButtonClick();}}>Fetch Data</button>
+        </div>
         
         <GameAnimationPage positions1={positionsForAllPlayers[0]} positions2={positionsForAllPlayers[1]}/>
         <OptimalStrategyPage arrows={arrows}/>

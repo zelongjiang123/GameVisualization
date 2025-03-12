@@ -4,10 +4,18 @@ import React, { createContext, useContext, useState } from "react";
 export interface GameInputContextType {
   rewardMatrix: number[][][];
   setRewardMatrixCallback: (matrix: number[][][]) => void;
+  crashValue: number;
+  setCrashValueCallback: (value: number) => void;
+  discountRate: number;
+  setDiscountRateCallback: (value: number) => void;
 }
 
 // Create the context with a default value (null or default object)
 export const GameInputContext = createContext<GameInputContextType>({
   rewardMatrix: [],
   setRewardMatrixCallback: () => {},
+  crashValue: 10,
+  setCrashValueCallback: () => {},
+  discountRate: 0.9,
+  setDiscountRateCallback: () => {},
 });

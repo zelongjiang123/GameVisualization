@@ -1,17 +1,30 @@
 .game-input {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 300px;
-    margin: auto;
-
-    .game-input-content {
-        display: flex;
-        align-items: center;
+    .game-input-textbox-container {
         justify-content: center;
-        padding: 10px;
-        border: 1px solid black;
-        min-width: 80px;
-        text-align: center;
+        display: flex;
+        gap: 10px;
+        .game-input-textbox {
+            display: flex;
+            gap: 10px;
+        }
+    }
+
+    .game-input-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 300px;
+        margin: auto;
+    
+        .game-input-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border: 1px solid black;
+            min-width: 80px;
+            text-align: center;
+        }
     }
 }
+
   

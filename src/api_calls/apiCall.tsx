@@ -18,7 +18,7 @@ interface GetGameResultAPIResponse {
 const server_url_local = "http://localhost:8080";
 const server_url = "https://www.zelongjiang.cc";
 
-export async function getGameResult(rewardMatrix: number[][][], onMessage: (message: string) => void): Promise<GetGameResultResponse> {
+export async function getGameResult(rewardMatrix: number[][][], crashValue: number, discountRate: number, onMessage: (message: string) => void): Promise<GetGameResultResponse> {
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -30,10 +30,16 @@ export async function getGameResult(rewardMatrix: number[][][], onMessage: (mess
              * and then call the game_result (GET)
              */
 
+            const data = {
+                rewardMatrix,
+                crashValue,
+                discountRate,
+            }
+
             const response = await fetch(`${server_url_local}/api/start_game`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(rewardMatrix),
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {

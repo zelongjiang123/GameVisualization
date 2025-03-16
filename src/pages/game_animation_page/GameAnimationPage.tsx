@@ -1,3 +1,4 @@
+import CollapsibleSection from "../../components/CollapsibleSection";
 import GameAnimation from "../../components/GameAnimation";
 
 interface GameAnimationPageProps {
@@ -11,10 +12,11 @@ const GameAnimationPage: React.FC<GameAnimationPageProps> = ({
     positions2,
 }) => {
     return (
-        <div className="game-animation-page">
-            <h1>Game Animation</h1>
-            <GameAnimation positions1={positions1} positions2={positions2}/>
-        </div>
+        <CollapsibleSection title="Game Animation">
+            <div className="game-animation-page">
+                <GameAnimation positions1={positions1} positions2={positions2} />
+            </div>
+        </CollapsibleSection>
     );
 }
 

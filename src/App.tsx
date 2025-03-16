@@ -8,9 +8,10 @@ import { getGameResult } from './api_calls/apiCall';
 import { Arrow, PoliciesGivenOpponentPosition } from './components/configs';
 import LoadingPage from './pages/loading_page/LoadingPage';
 import GameAnimationPage from './pages/game_animation_page/GameAnimationPage';
-import GameInput from './components/GameInput';
+import GameInput from './pages/game_input_page/GameInput';
 import { GameInputContext } from './contexts/GameInputContext';
 import JointStrategiesPage from './pages/joint_strategies_page/JointStrategiesPage';
+import Instruction from './pages/instruction_page/Instruction';
 
 function App() {
   const [arrows, setArrows] = useState<Arrow[][]>([]);
@@ -46,13 +47,13 @@ function App() {
     <div className="App">
       { !loading && 
       <div className='content'>
-        
+        <Instruction/>
         <GameInputContext.Provider value={{rewardMatrix, setRewardMatrixCallback: (matrix) => setRewardMatrix(matrix), crashValue, setCrashValueCallback: (value) => setCrashValue(value), discountRate, setDiscountRateCallback: (value) => setDiscountRate(value)}}>
-          <GameInput/>
+          <GameInput onFetchData={handleButtonClick}/>
         </GameInputContext.Provider>
 
         <div>
-          <button onClick={()=>{handleButtonClick();}}>Fetch Data</button>
+          
         </div>
         
         <GameAnimationPage positions1={positionsForAllPlayers[0]} positions2={positionsForAllPlayers[1]}/>

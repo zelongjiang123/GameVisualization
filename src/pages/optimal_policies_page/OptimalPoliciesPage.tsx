@@ -1,3 +1,4 @@
+import CollapsibleSection from '../../components/CollapsibleSection';
 import { Arrow, player1Color, player2Color } from '../../components/configs';
 import MatrixGrid from '../../components/MatrixGrid';
 
@@ -37,15 +38,15 @@ const OptimalPoliciesPage: React.FC<OptimalPoliciesPageProps> = ({
   arrows,
 }) => {
   return (
-    <div className="optimal-policiesPage">
-      <h1>Optimal Policy</h1>
-      <div>
-        {arrows.map((arrow, index) => {
-          return <MatrixGrid key={`optimal-policiesPage-matrix-${index}`} arrowsPlayer1={[arrow[0]]} arrowsPlayer2={[arrow[1]]} header={`step ${index}`} isApplyNudge={true} colorPlayer1={player1Color} colorPlayer2={player2Color} />
-        })}
+    <CollapsibleSection title="Optimal Policies">
+      <div className="optimal-policiesPage">
+        <div>
+          {arrows.map((arrow, index) => {
+            return <MatrixGrid key={`optimal-policiesPage-matrix-${index}`} arrowsPlayer1={[arrow[0]]} arrowsPlayer2={[arrow[1]]} header={`step ${index}`} isApplyNudge={true} colorPlayer1={player1Color} colorPlayer2={player2Color} />
+          })}
+        </div>
       </div>
-     
-    </div>
+    </CollapsibleSection>
   );
 }
 

@@ -28,12 +28,12 @@ const arrowsPlayer1: Arrow[] = [
     { fromRow: 2, fromCol: 2, toRow: 1, toCol: 2, probability: 0.7 },
 ];
   
-type OptimalPolicyPageProps = {
+type OptimalStrategiesPageProps = {
   policies: PoliciesGivenOpponentPosition[][];
 };
 
 
-const OptimalPolicyPage: React.FC<OptimalPolicyPageProps> = ({
+const OptimalStrategiesPage: React.FC<OptimalStrategiesPageProps> = ({
   policies,
 }) => {
   return (
@@ -53,7 +53,7 @@ const OptimalPolicyPage: React.FC<OptimalPolicyPageProps> = ({
             {
               policy.map((entry, index2)=>{
                 let highlightedCell: HighlightCell = {color: opponentColor, row: entry.opponentPos[0], col: entry.opponentPos[1]};
-                return <MatrixGrid key={`optimal-policyPage-matrix-player${index+1}-${index2}`} arrowsPlayer1={entry.strategies} header={`the opponent is at position ${entry.opponentPos}`} colorPlayer1={color} highlightedCell={highlightedCell}/>
+                return <MatrixGrid key={`optimal-strategiesPage-matrix-player${index+1}-${index2}`} arrowsPlayer1={entry.strategies} header={`the opponent is at position ${entry.opponentPos}`} colorPlayer1={color} highlightedCell={highlightedCell}/>
               })
             }
             </div>
@@ -67,4 +67,4 @@ const OptimalPolicyPage: React.FC<OptimalPolicyPageProps> = ({
   );
 }
 
-export default OptimalPolicyPage;
+export default OptimalStrategiesPage;

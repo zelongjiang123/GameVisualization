@@ -28,20 +28,20 @@ const arrowsPlayer2: Arrow[] = [
 ];
 
 
-type OptimalStrategyPageProps = {
+type OptimalPoliciesPageProps = {
   arrows: Arrow[][];
 };
 
 
-const OptimalStrategyPage: React.FC<OptimalStrategyPageProps> = ({
+const OptimalPoliciesPage: React.FC<OptimalPoliciesPageProps> = ({
   arrows,
 }) => {
   return (
-    <div className="optimal-strategyPage">
+    <div className="optimal-policiesPage">
       <h1>Optimal Policy</h1>
       <div>
         {arrows.map((arrow, index) => {
-          return <MatrixGrid key={`optimal-strategyPage-matrix-${index}`} arrowsPlayer1={[arrow[0]]} arrowsPlayer2={[arrow[1]]} header={`step ${index}`} isApplyNudge={true} colorPlayer1={player1Color} colorPlayer2={player2Color} />
+          return <MatrixGrid key={`optimal-policiesPage-matrix-${index}`} arrowsPlayer1={[arrow[0]]} arrowsPlayer2={[arrow[1]]} header={`step ${index}`} isApplyNudge={true} colorPlayer1={player1Color} colorPlayer2={player2Color} />
         })}
       </div>
      
@@ -49,4 +49,4 @@ const OptimalStrategyPage: React.FC<OptimalStrategyPageProps> = ({
   );
 }
 
-export default OptimalStrategyPage;
+export default OptimalPoliciesPage;

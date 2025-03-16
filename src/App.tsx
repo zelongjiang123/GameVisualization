@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import OptimalStrategyPage from './pages/optimal_strategy_page/OptimalStrategyPage';
-import OptimalPolicyPage from './pages/optimal_policy_page/OptimalPolicyPage';
+import OptimalPoliciesPage from './pages/optimal_policies_page/OptimalPoliciesPage';
+import OptimalStrategiesPage from './pages/optimal_strategies_page/OptimalStrategiesPage';
 import NodesGraph from './components/NodesGraph';
 import { getGameResult } from './api_calls/apiCall';
 import { Arrow, PoliciesGivenOpponentPosition } from './components/configs';
@@ -10,7 +10,7 @@ import LoadingPage from './pages/loading_page/LoadingPage';
 import GameAnimationPage from './pages/game_animation_page/GameAnimationPage';
 import GameInput from './components/GameInput';
 import { GameInputContext } from './contexts/GameInputContext';
-import JointPolicyPage from './pages/joint_policy_page/JointPolicyPage';
+import JointStrategiesPage from './pages/joint_strategies_page/JointStrategiesPage';
 
 function App() {
   const [arrows, setArrows] = useState<Arrow[][]>([]);
@@ -56,9 +56,9 @@ function App() {
         </div>
         
         <GameAnimationPage positions1={positionsForAllPlayers[0]} positions2={positionsForAllPlayers[1]}/>
-        <OptimalStrategyPage arrows={arrows}/>
-        <JointPolicyPage arrows={arrowsJointPolicy}/>
-        <OptimalPolicyPage policies={policies} />
+        <OptimalPoliciesPage arrows={arrows}/>
+        <JointStrategiesPage arrows={arrowsJointPolicy}/>
+        <OptimalStrategiesPage policies={policies} />
       </div>
       }
       {loading && <LoadingPage content={message}/>}

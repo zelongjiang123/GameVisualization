@@ -15,8 +15,9 @@ interface GetGameResultAPIResponse {
         transitions: { nextPositions: number[], positions: number[], probability: number }[]
     }[];
 }
-const server_url_local = "http://localhost:8080";
-const server_url = "https://game-solver-backend.onrender.com";
+const server_url_local = "http://localhost:5000";
+// const server_url = "https://game-solver-backend.onrender.com";
+const server_url = "https://www.zelongjiang.cc";
 
 export async function getGameResult(rewardMatrix: number[][][], crashValue: number, discountRate: number, onMessage: (message: string) => void): Promise<GetGameResultResponse> {
 
@@ -36,7 +37,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                 discountRate,
             }
 
-            const response = await fetch(`${server_url_local}/api/start_game`, {
+            const response = await fetch(`${server_url}/api/start_game`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -48,7 +49,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
 
             const sessionId = await response.text();
 
-            const eventSource = new EventSource(`${server_url_local}/api/game_result?sessionId=${sessionId}`);
+            const eventSource = new EventSource(`${server_url}/api/game_result?sessionId=${sessionId}`);
 
             let result: GetGameResultResponse = {
                 arrows: [],

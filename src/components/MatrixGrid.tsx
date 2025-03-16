@@ -73,7 +73,7 @@ const MatrixGrid: React.FC<MatrixGridProps> = ({
     }
   };
 
-  const cellSize = 100;
+  const cellSize = 90;
   const svgWidth = cols * cellSize;
   const svgHeight = rows * cellSize;
 

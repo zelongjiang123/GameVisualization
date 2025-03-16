@@ -1,4 +1,8 @@
 .game-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     .game-input-textbox-container {
         justify-content: center;
         display: flex;
@@ -9,13 +13,13 @@
         }
     }
 
-    .game-input-container {
+    .game-input-matrix-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         max-width: 300px;
         margin: auto;
     
-        .game-input-content {
+        .game-input-matrix {
             display: flex;
             align-items: center;
             justify-content: center;

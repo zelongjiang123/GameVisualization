@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import "./GameAnimation.less"
 
 const GRID_SIZE = 3;
 const CELL_SIZE = 100;
@@ -96,7 +97,7 @@ const GameAnimation: React.FC<GameAnimationProps> = ({ positions1, positions2 })
   }
 
   return (
-    <div>
+    <div className="game-animation">
       <canvas ref={canvasRef} width={GRID_SIZE * CELL_SIZE} height={GRID_SIZE * CELL_SIZE} />
       
       <div style={{ marginTop: 10 }}>
@@ -111,13 +112,15 @@ const GameAnimation: React.FC<GameAnimationProps> = ({ positions1, positions2 })
         />
       </div>
 
-      <button onClick={() => setIsRunning((prev) => !prev)} style={{ marginRight: 10 }}>
-        {isRunning ? "Pause" : "Resume"}
-      </button>
+      <div>
+        <button onClick={() => setIsRunning((prev) => !prev)} style={{ marginRight: 10 }}>
+          {isRunning ? "Pause" : "Resume"}
+        </button>
 
-      <button onClick={() => {onRestart();}}>
-        Restart
-      </button>
+        <button onClick={() => { onRestart(); }}>
+          Restart
+        </button>
+      </div>
     </div>
   );
 };

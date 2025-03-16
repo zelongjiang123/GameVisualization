@@ -64,12 +64,12 @@ const GameInput: React.FC<GameInputProps> = ({
           </div>
         </div>
         <label>Reward Matrix</label>
-        <div className="game-input-container">
+        <div className="game-input-matrix-container">
           {context.rewardMatrix.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className="game-input-content"
+                className="game-input-matrix"
               >
                 <input
                   type="number"

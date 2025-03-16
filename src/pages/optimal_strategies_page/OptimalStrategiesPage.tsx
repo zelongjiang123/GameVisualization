@@ -54,7 +54,7 @@ const OptimalStrategiesPage: React.FC<OptimalStrategiesPageProps> = ({
                   {
                     policy.map((entry, index2) => {
                       let highlightedCell: HighlightCell = { color: opponentColor, row: entry.opponentPos[0], col: entry.opponentPos[1] };
-                      return <MatrixGrid key={`optimal-strategiesPage-matrix-player${index + 1}-${index2}`} arrowsPlayer1={entry.strategies} header={`the opponent is at position ${entry.opponentPos}`} colorPlayer1={color} highlightedCell={highlightedCell} />
+                      return <MatrixGrid key={`optimal-strategiesPage-matrix-player${index + 1}-${index2}`} arrowsPlayer1={entry.strategies} header={`the opponent is at \n position ${entry.opponentPos}`} colorPlayer1={color} highlightedCell={highlightedCell} />
                     })
                   }
                 </div>

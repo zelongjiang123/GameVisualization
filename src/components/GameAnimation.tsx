@@ -69,7 +69,14 @@ const GameAnimation: React.FC<GameAnimationProps> = ({ positions1, positions2 })
     animationFrameId = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [index, positions1, positions2, isRunning]);
+  }, [index, isRunning]);
+
+  useEffect(() => { // when the positions changes, restart the animation
+    onRestart();
+  }, [positions1, positions2])
+
+
+
 
   const drawGrid = (ctx: CanvasRenderingContext2D) => {
     ctx.strokeStyle = "black";

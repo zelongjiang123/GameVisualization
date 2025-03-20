@@ -24,3 +24,8 @@ export type HighlightCell = {
   row: number;
   col: number;
 }
+
+export interface JointStrategy {
+    positions: number[][],
+    transitions: {positions: number[], nextPositions: number[], probability: number}[][]
+}

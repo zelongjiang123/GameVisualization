@@ -1,4 +1,4 @@
-import { Arrow, StrategiesGivenOpponentPosition, Strategy } from "../components/configs";
+import { Arrow, JointStrategy, StrategiesGivenOpponentPosition, Strategy } from "../components/configs";
 
 
 interface GetGameResultResponse {
@@ -6,6 +6,7 @@ interface GetGameResultResponse {
     strategiesGivenOpponentPosition: StrategiesGivenOpponentPosition[][];
     positionsForAllPlayers: [number, number][][];
     arrowsJointStrategies: Arrow[][][],
+    jointStrategiesMap: Map<string, JointStrategy>;
 }
 
 const server_url_local = "http://localhost:5000";
@@ -49,6 +50,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                 strategiesGivenOpponentPosition: [],
                 positionsForAllPlayers: [],
                 arrowsJointStrategies: [],
+                jointStrategiesMap: new Map(),
             };
 
             eventSource.onmessage = (event) => {
@@ -112,9 +114,10 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
 
                         
                         let arrowsJointStrategies: Arrow[][][] = [];
+                        let jointStrategiesMap: Map<string, JointStrategy> = new Map();
                         if(parsedResponse.jointStrategies !== undefined){
                             // calculate the optimal joint strategies for every state (positions)
-                            let jointStrategies = parsedResponse.jointStrategies;
+                            let jointStrategies: JointStrategy[] = parsedResponse.jointStrategies;
                             for(let i=0; i<jointStrategies.length; i++){
                                 let strategies: Arrow[][] = [];
                                 for(const transitionList of jointStrategies[i].transitions){
@@ -125,10 +128,14 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                                     strategies.push(transitions);
                                 }
                                 arrowsJointStrategies.push(strategies);
+                                
+                                let positions = jointStrategies[i].positions;
+                                jointStrategiesMap.set(`${positions[0][0]},${positions[0][1]},${positions[1][0]},${positions[1][1]}`, jointStrategies[i]);
                             }
+
                         }
 
-                        result = { arrowsOptimalPolicies, strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], positionsForAllPlayers, arrowsJointStrategies };
+                        result = { arrowsOptimalPolicies, strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], positionsForAllPlayers, arrowsJointStrategies, jointStrategiesMap };
                     }
                 } catch (error) {
                     console.error("Error parsing SSE message:", error);

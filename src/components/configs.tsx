@@ -9,7 +9,7 @@ export interface Arrow {
 export const player1Color = "red";
 export const player2Color = "blue";
 
-export type PoliciesGivenOpponentPosition = {
+export type StrategiesGivenOpponentPosition = {
     opponentPos: number[],
     strategies: Arrow[],
 }

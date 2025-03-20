@@ -1,5 +1,5 @@
 import CollapsibleSection from '../../components/CollapsibleSection';
-import { Arrow, HighlightCell, player1Color, player2Color, PoliciesGivenOpponentPosition } from '../../components/configs';
+import { Arrow, HighlightCell, player1Color, player2Color, StrategiesGivenOpponentPosition } from '../../components/configs';
 import MatrixGrid from '../../components/MatrixGrid';
 
 const arrowsPlayer1: Arrow[] = [
@@ -30,19 +30,19 @@ const arrowsPlayer1: Arrow[] = [
 ];
   
 type OptimalStrategiesPageProps = {
-  policies: PoliciesGivenOpponentPosition[][];
+  strategies: StrategiesGivenOpponentPosition[][];
 };
 
 
 const OptimalStrategiesPage: React.FC<OptimalStrategiesPageProps> = ({
-  policies,
+  strategies,
 }) => {
   return (
     <CollapsibleSection title="Optimal Strategies">
       <div className="optimal-strategyPage">
         <div>
           {
-            policies.map((policy, index) => {
+            strategies.map((strategy, index) => {
               let color = player1Color, opponentColor = player2Color;
               if (index === 1) {
                 color = player2Color;
@@ -52,7 +52,7 @@ const OptimalStrategiesPage: React.FC<OptimalStrategiesPageProps> = ({
                 <h2>Player {index + 1}</h2>
                 <div>
                   {
-                    policy.map((entry, index2) => {
+                    strategy.map((entry, index2) => {
                       let highlightedCell: HighlightCell = { color: opponentColor, row: entry.opponentPos[0], col: entry.opponentPos[1] };
                       return <MatrixGrid key={`optimal-strategiesPage-matrix-player${index + 1}-${index2}`} arrowsPlayer1={entry.strategies} header={`the opponent is at \n position ${entry.opponentPos}`} colorPlayer1={color} highlightedCell={highlightedCell} />
                     })

@@ -5,7 +5,7 @@ import OptimalPoliciesPage from './pages/optimal_policies_page/OptimalPoliciesPa
 import OptimalStrategiesPage from './pages/optimal_strategies_page/OptimalStrategiesPage';
 import NodesGraph from './components/NodesGraph';
 import { getGameResult } from './api_calls/apiCall';
-import { Arrow, PoliciesGivenOpponentPosition } from './components/configs';
+import { Arrow, StrategiesGivenOpponentPosition } from './components/configs';
 import LoadingPage from './pages/loading_page/LoadingPage';
 import GameAnimationPage from './pages/game_animation_page/GameAnimationPage';
 import GameInput from './pages/game_input_page/GameInput';
@@ -14,9 +14,9 @@ import JointStrategiesPage from './pages/joint_strategies_page/JointStrategiesPa
 import Instruction from './pages/instruction_page/Instruction';
 
 function App() {
-  const [arrows, setArrows] = useState<Arrow[][]>([]);
-  const [arrowsJointPolicy, setArrowsJointPolicy] = useState<Arrow[][][]>([]);
-  const [policies, setPolicies] = useState<PoliciesGivenOpponentPosition[][]>([]);
+  const [arrowsOptimalPolicies, setArrowsOptimalPolicies] = useState<Arrow[][]>([]);
+  const [arrowsJointStrategies, setArrowsJointStrategies] = useState<Arrow[][][]>([]);
+  const [strategiesGivenOpponentPosition, setStrategiesGivenOpponentPosition] = useState<StrategiesGivenOpponentPosition[][]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [positionsForAllPlayers, setPositionsForAllPlayers] = useState<[number, number][][]>([[], []]);
   const [message, setMessage] = useState<string>("");
@@ -34,12 +34,11 @@ function App() {
     console.log("click");
     setMessage("");
     setLoading(true);
-    let {arrows, policies, positionsForAllPlayers, arrowsJointPolicy} = await getGameResult(rewardMatrix, crashValue, discountRate, (message) => setMessage(message));
-    console.log(arrows)
-    setArrows(arrows);
-    setPolicies(policies);
+    let {arrowsOptimalPolicies, strategiesGivenOpponentPosition, positionsForAllPlayers, arrowsJointStrategies} = await getGameResult(rewardMatrix, crashValue, discountRate, (message) => setMessage(message));
+    setArrowsOptimalPolicies(arrowsOptimalPolicies);
+    setStrategiesGivenOpponentPosition(strategiesGivenOpponentPosition);
     setPositionsForAllPlayers(positionsForAllPlayers);
-    setArrowsJointPolicy(arrowsJointPolicy);
+    setArrowsJointStrategies(arrowsJointStrategies);
     setLoading(false);
   }
 
@@ -57,9 +56,9 @@ function App() {
         </div>
         
         <GameAnimationPage positions1={positionsForAllPlayers[0]} positions2={positionsForAllPlayers[1]}/>
-        <OptimalPoliciesPage arrows={arrows}/>
-        <JointStrategiesPage arrows={arrowsJointPolicy}/>
-        <OptimalStrategiesPage policies={policies} />
+        <OptimalPoliciesPage arrows={arrowsOptimalPolicies}/>
+        <JointStrategiesPage arrows={arrowsJointStrategies}/>
+        <OptimalStrategiesPage strategies={strategiesGivenOpponentPosition} />
       </div>
       }
       {loading && <LoadingPage content={message}/>}

@@ -1,20 +1,13 @@
-import { Arrow, PoliciesGivenOpponentPosition, Strategy } from "../components/configs";
+import { Arrow, StrategiesGivenOpponentPosition, Strategy } from "../components/configs";
 
 
 interface GetGameResultResponse {
-    arrows: Arrow[][];
-    policies: PoliciesGivenOpponentPosition[][];
+    arrowsOptimalPolicies: Arrow[][];
+    strategiesGivenOpponentPosition: StrategiesGivenOpponentPosition[][];
     positionsForAllPlayers: [number, number][][];
-    arrowsJointPolicy: Arrow[][][],
+    arrowsJointStrategies: Arrow[][][],
 }
 
-interface GetGameResultAPIResponse {
-    optimalStrategies: number[][][];
-    optimalPolicies: {
-        opponentPositions: number[],
-        transitions: { nextPositions: number[], positions: number[], probability: number }[]
-    }[];
-}
 const server_url_local = "http://localhost:5000";
 // const server_url = "https://game-solver-backend.onrender.com";
 const server_url = "https://www.zelongjiang.cc";
@@ -37,7 +30,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                 discountRate,
             }
 
-            const response = await fetch(`${server_url}/api/start_game`, {
+            const response = await fetch(`${server_url_local}/api/start_game`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
@@ -49,13 +42,13 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
 
             const sessionId = await response.text();
 
-            const eventSource = new EventSource(`${server_url}/api/game_result?sessionId=${sessionId}`);
+            const eventSource = new EventSource(`${server_url_local}/api/game_result?sessionId=${sessionId}`);
 
             let result: GetGameResultResponse = {
-                arrows: [],
-                policies: [],
+                arrowsOptimalPolicies: [],
+                strategiesGivenOpponentPosition: [],
                 positionsForAllPlayers: [],
-                arrowsJointPolicy: [],
+                arrowsJointStrategies: [],
             };
 
             eventSource.onmessage = (event) => {
@@ -70,15 +63,16 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                         resolve(result); // Resolve with the final game result
                     } else {
                         // console.log(parsedResponse);
-                        let arrows: Arrow[][] = [];
+                        let arrowsOptimalPolicies: Arrow[][] = [];
                         let positionsForAllPlayers: [number, number][][] = [[], []];
 
                         if (parsedResponse.optimalStrategies !== undefined) {
+                            // calculate the optimal policies given the starting positions of the players
                             let positions = parsedResponse.optimalStrategies;
                             let positionsPlayer1: [number, number][] = [], positionsPlayer2: [number, number][] = [];
 
                             for (let i = 0; i < positions[0].length - 1; i++) {
-                                arrows.push([
+                                arrowsOptimalPolicies.push([
                                     { fromRow: positions[0][i][0], fromCol: positions[0][i][1], toRow: positions[0][i + 1][0], toCol: positions[0][i + 1][1] },
                                     { fromRow: positions[1][i][0], fromCol: positions[1][i][1], toRow: positions[1][i + 1][0], toCol: positions[1][i + 1][1] }
                                 ]);
@@ -94,45 +88,47 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                         }
 
 
-                        let policyListPlayer1: PoliciesGivenOpponentPosition[] = [];
-                        let policyListPlayer2: PoliciesGivenOpponentPosition[] = [];
+                        let strategyListPlayer1: StrategiesGivenOpponentPosition[] = [];
+                        let strategyListPlayer2: StrategiesGivenOpponentPosition[] = [];
 
                         if (parsedResponse.optimalPolicies !== undefined) {
-                            let policies = parsedResponse.optimalPolicies;
-                            for (let i = 0; i < policies.length / 2; i++) {
+                            // calculate the optimal strategies for each player given the other player's position
+                            let optimalStrategies = parsedResponse.optimalPolicies;
+                            for (let i = 0; i < optimalStrategies.length / 2; i++) {
                                 let strategies: Arrow[] = [];
-                                for (const strategy of policies[i].transitions) {
+                                for (const strategy of optimalStrategies[i].transitions) {
                                     strategies.push({ fromRow: strategy.positions[0], fromCol: strategy.positions[1], toRow: strategy.nextPositions[0], toCol: strategy.nextPositions[1], probability: strategy.probability });
                                 }
-                                policyListPlayer1.push({ opponentPos: policies[i].opponentPositions, strategies: strategies });
+                                strategyListPlayer1.push({ opponentPos: optimalStrategies[i].opponentPositions, strategies: strategies });
                             }
-                            for (let i = policies.length / 2; i < policies.length; i++) {
+                            for (let i = optimalStrategies.length / 2; i < optimalStrategies.length; i++) {
                                 let strategies: Arrow[] = [];
-                                for (const strategy of policies[i].transitions) {
+                                for (const strategy of optimalStrategies[i].transitions) {
                                     strategies.push({ fromRow: strategy.positions[0], fromCol: strategy.positions[1], toRow: strategy.nextPositions[0], toCol: strategy.nextPositions[1], probability: strategy.probability });
                                 }
-                                policyListPlayer2.push({ opponentPos: policies[i].opponentPositions, strategies: strategies });
+                                strategyListPlayer2.push({ opponentPos: optimalStrategies[i].opponentPositions, strategies: strategies });
                             }
                         }
 
                         
-                        let arrowsJointPolicy: Arrow[][][] = [];
+                        let arrowsJointStrategies: Arrow[][][] = [];
                         if(parsedResponse.jointPolicies !== undefined){
-                            let jointPolicies = parsedResponse.jointPolicies;
-                            for(let i=0; i<jointPolicies.length; i++){
-                                let policies: Arrow[][] = [];
-                                for(const transitionList of jointPolicies[i].transitions){
+                            // calculate the optimal joint strategies for every state (positions)
+                            let jointStrategies = parsedResponse.jointPolicies;
+                            for(let i=0; i<jointStrategies.length; i++){
+                                let strategies: Arrow[][] = [];
+                                for(const transitionList of jointStrategies[i].transitions){
                                     let transitions: Arrow[] = [];
                                     for(const transition of transitionList){
                                         transitions.push({fromRow: transition.positions[0], fromCol: transition.positions[1], toRow: transition.nextPositions[0], toCol: transition.nextPositions[1], probability: transition.probability});
                                     }
-                                    policies.push(transitions);
+                                    strategies.push(transitions);
                                 }
-                                arrowsJointPolicy.push(policies);
+                                arrowsJointStrategies.push(strategies);
                             }
                         }
 
-                        result = { arrows, policies: [policyListPlayer1, policyListPlayer2], positionsForAllPlayers, arrowsJointPolicy };
+                        result = { arrowsOptimalPolicies, strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], positionsForAllPlayers, arrowsJointStrategies };
                     }
                 } catch (error) {
                     console.error("Error parsing SSE message:", error);

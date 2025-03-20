@@ -14,7 +14,7 @@ const GameAnimationPage: React.FC<GameAnimationPageProps> = ({
     return (
         <CollapsibleSection title="Game Animation">
             <div className="game-animation-page">
-                <GameAnimation positions1={positions1} positions2={positions2} />
+                {positions1.length > 0 && <GameAnimation positions1={positions1} positions2={positions2} />}
             </div>
         </CollapsibleSection>
     );

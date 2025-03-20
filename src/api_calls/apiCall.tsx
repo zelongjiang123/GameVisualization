@@ -66,9 +66,9 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                         let arrowsOptimalPolicies: Arrow[][] = [];
                         let positionsForAllPlayers: [number, number][][] = [[], []];
 
-                        if (parsedResponse.optimalStrategies !== undefined) {
+                        if (parsedResponse.optimalPolicies !== undefined) {
                             // calculate the optimal policies given the starting positions of the players
-                            let positions = parsedResponse.optimalStrategies;
+                            let positions = parsedResponse.optimalPolicies;
                             let positionsPlayer1: [number, number][] = [], positionsPlayer2: [number, number][] = [];
 
                             for (let i = 0; i < positions[0].length - 1; i++) {
@@ -91,9 +91,9 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                         let strategyListPlayer1: StrategiesGivenOpponentPosition[] = [];
                         let strategyListPlayer2: StrategiesGivenOpponentPosition[] = [];
 
-                        if (parsedResponse.optimalPolicies !== undefined) {
+                        if (parsedResponse.optimalStrategies !== undefined) {
                             // calculate the optimal strategies for each player given the other player's position
-                            let optimalStrategies = parsedResponse.optimalPolicies;
+                            let optimalStrategies = parsedResponse.optimalStrategies;
                             for (let i = 0; i < optimalStrategies.length / 2; i++) {
                                 let strategies: Arrow[] = [];
                                 for (const strategy of optimalStrategies[i].transitions) {
@@ -112,9 +112,9 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
 
                         
                         let arrowsJointStrategies: Arrow[][][] = [];
-                        if(parsedResponse.jointPolicies !== undefined){
+                        if(parsedResponse.jointStrategies !== undefined){
                             // calculate the optimal joint strategies for every state (positions)
-                            let jointStrategies = parsedResponse.jointPolicies;
+                            let jointStrategies = parsedResponse.jointStrategies;
                             for(let i=0; i<jointStrategies.length; i++){
                                 let strategies: Arrow[][] = [];
                                 for(const transitionList of jointStrategies[i].transitions){

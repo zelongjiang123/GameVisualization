@@ -1,58 +1,60 @@
 .collapsible-container {
-    text-align: center;
-    margin: 20px auto;
-  }
-  
-  /* Clickable Header */
-  .collapsible-header {
-    background-color: #007bff;
-    color: white;
-    padding: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.3s ease;
-  }
-  
-  .collapsible-header:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Arrow Indicator */
-  .arrow {
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .arrow.open {
-    transform: rotate(180deg);
-  }
-  
-  /* Collapsible Content */
-  .collapsible-content {
-    background-color: #f9f9f9;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    padding: 0 20px;
-    text-align: left;
-    color: #333;
-    line-height: 1.8;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out, padding 0.3s ease-in-out;
-    overflow: auto;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Show when expanded */
-  .collapsible-content.show {
-    max-height: 500px; /* Adjust based on content size */
-    padding: 20px;
-  }
+  text-align: center;
+  margin: 20px auto;
+  width: 100%;
+}
+
+/* Clickable Header */
+.collapsible-header {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.collapsible-header:hover {
+  background-color: #0056b3;
+}
+
+/* Arrow Indicator */
+.arrow {
+  transition: transform 0.3s ease-in-out;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Collapsible Content */
+.collapsible-content {
+  background-color: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 0 20px;
+  text-align: left;
+  color: #333;
+  line-height: 1.8;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, padding 0.3s ease-in-out;
+  overflow: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Show when expanded */
+.collapsible-content.show {
+  max-height: 500px;
+  /* Adjust based on content size */
+  padding: 20px;
+}
   

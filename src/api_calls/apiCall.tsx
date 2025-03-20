@@ -2,7 +2,6 @@ import { Arrow, JointStrategy, StrategiesGivenOpponentPosition, Strategy } from 
 
 
 interface GetGameResultResponse {
-    arrowsOptimalPolicies: Arrow[][];
     strategiesGivenOpponentPosition: StrategiesGivenOpponentPosition[][];
     arrowsJointStrategies: Arrow[][][],
     jointStrategiesMap: Map<string, JointStrategy>;
@@ -45,7 +44,6 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
             const eventSource = new EventSource(`${server_url_local}/api/game_result?sessionId=${sessionId}`);
 
             let result: GetGameResultResponse = {
-                arrowsOptimalPolicies: [],
                 strategiesGivenOpponentPosition: [],
                 arrowsJointStrategies: [],
                 jointStrategiesMap: new Map(),
@@ -63,31 +61,6 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                         resolve(result); // Resolve with the final game result
                     } else {
                         // console.log(parsedResponse);
-                        let arrowsOptimalPolicies: Arrow[][] = [];
-                        let positionsForAllPlayers: [number, number][][] = [[], []];
-
-                        if (parsedResponse.optimalPolicies !== undefined) {
-                            // calculate the optimal policies given the starting positions of the players
-                            let positions = parsedResponse.optimalPolicies;
-                            let positionsPlayer1: [number, number][] = [], positionsPlayer2: [number, number][] = [];
-
-                            for (let i = 0; i < positions[0].length - 1; i++) {
-                                arrowsOptimalPolicies.push([
-                                    { fromRow: positions[0][i][0], fromCol: positions[0][i][1], toRow: positions[0][i + 1][0], toCol: positions[0][i + 1][1] },
-                                    { fromRow: positions[1][i][0], fromCol: positions[1][i][1], toRow: positions[1][i + 1][0], toCol: positions[1][i + 1][1] }
-                                ]);
-                            }
-
-                            for (let i = 0; i < positions[0].length; i++) {
-                                positionsPlayer1.push([positions[0][i][0], positions[0][i][1]]);
-                                positionsPlayer2.push([positions[1][i][0], positions[1][i][1]]);
-                            }
-
-                            positionsForAllPlayers[0] = positionsPlayer1;
-                            positionsForAllPlayers[1] = positionsPlayer2;
-                        }
-
-
                         let strategyListPlayer1: StrategiesGivenOpponentPosition[] = [];
                         let strategyListPlayer2: StrategiesGivenOpponentPosition[] = [];
 
@@ -133,7 +106,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
 
                         }
 
-                        result = { arrowsOptimalPolicies, strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], arrowsJointStrategies, jointStrategiesMap };
+                        result = { strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], arrowsJointStrategies, jointStrategiesMap };
                     }
                 } catch (error) {
                     console.error("Error parsing SSE message:", error);

@@ -16,7 +16,6 @@ import { join } from 'path';
 import OptimalPoliciesVisualizationPage from './pages/optimal_policies_visualization_page/OptimalPoliciesVisualizationPage';
 
 function App() {
-  const [arrowsOptimalPolicies, setArrowsOptimalPolicies] = useState<Arrow[][]>([]);
   const [arrowsJointStrategies, setArrowsJointStrategies] = useState<Arrow[][][]>([]);
   const [strategiesGivenOpponentPosition, setStrategiesGivenOpponentPosition] = useState<StrategiesGivenOpponentPosition[][]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -36,8 +35,7 @@ function App() {
     console.log("click");
     setMessage("");
     setLoading(true);
-    let {jointStrategiesMap, arrowsOptimalPolicies, strategiesGivenOpponentPosition, arrowsJointStrategies} = await getGameResult(rewardMatrix, crashValue, discountRate, (message) => setMessage(message));
-    setArrowsOptimalPolicies(arrowsOptimalPolicies);
+    let {jointStrategiesMap, strategiesGivenOpponentPosition, arrowsJointStrategies} = await getGameResult(rewardMatrix, crashValue, discountRate, (message) => setMessage(message));
     setStrategiesGivenOpponentPosition(strategiesGivenOpponentPosition);
     setArrowsJointStrategies(arrowsJointStrategies);
     setJointStrategiesMap(jointStrategiesMap);

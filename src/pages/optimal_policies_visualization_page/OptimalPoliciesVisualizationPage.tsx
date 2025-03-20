@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CollapsibleSection from "../../components/CollapsibleSection";
 import GameAnimation from "../../components/GameAnimation";
-import { JointStrategy } from "../../components/configs";
+import { Arrow, JointStrategy } from "../../components/configs";
+import OptimalPoliciesPage from "./OptimalPoliciesPage";
+import GameAnimationPage from "./GameAnimationPage";
 
-interface GameAnimationPageProps {
+interface OptimalPoliciesVisualizationPageProps {
     jointStrategiesMap: Map<string, JointStrategy>,
 };
 
 
-const GameAnimationPage: React.FC<GameAnimationPageProps> = ({
+const OptimalPoliciesVisualizationPage: React.FC<OptimalPoliciesVisualizationPageProps> = ({
     jointStrategiesMap
 }) => {
     const [player1StartingPosition, setPlayer1StartingPosition] = useState<number[]>([0, 0]);
@@ -16,6 +18,8 @@ const GameAnimationPage: React.FC<GameAnimationPageProps> = ({
     const [player1Positions, setPlayer1Positions] = useState<[number, number][]>([]);
     const [player2Positions, setPlayer2Positions] = useState<[number, number][]>([]);
     const [steps, setSteps] = useState<number>(10);
+    const [arrowsOptimalPolicies, setArrowsOptimalPolicies] = useState<Arrow[][]>([]);
+
 
     const handlePlayerStartingPositionChange = (player: number, row: number, col: number) => {
         let newStartingPosition = [row, col];
@@ -58,12 +62,21 @@ const GameAnimationPage: React.FC<GameAnimationPageProps> = ({
         }
         setPlayer1Positions(player1Positions);
         setPlayer2Positions(player2Positions);
+
+        let arrowsOptimalPolicies: Arrow[][] = [];
+        for (let i = 0; i < player1Positions.length - 1; i++) {
+            arrowsOptimalPolicies.push([
+                { fromRow: player1Positions[i][0], fromCol: player1Positions[i][1], toRow: player1Positions[i + 1][0], toCol: player1Positions[i + 1][1] },
+                { fromRow: player2Positions[i][0], fromCol: player2Positions[i][1], toRow: player2Positions[i + 1][0], toCol: player2Positions[i + 1][1] }
+            ]);
+        }
+        setArrowsOptimalPolicies(arrowsOptimalPolicies);
     }
 
     return (
-        <CollapsibleSection title="Game Animation">
-            <div className="game-animation-textbox-container">
-                <div className="game-animation-textbox">
+        <CollapsibleSection title="Optimal Policies">
+            <div className="optimal-policies-control-panel-container">
+                <div className="optimal-policies-control-panel">
                     <label>Player 1 starting position</label>
                     <input
                         type="number"
@@ -112,11 +125,10 @@ const GameAnimationPage: React.FC<GameAnimationPageProps> = ({
                 </div>
             </div>
             <button onClick={()=>{onRecalculateOptimalPolicies();}}>Recalculate the Optimal Policy</button>
-            <div className="game-animation-page">
-                {player1Positions.length > 0 && <GameAnimation positions1={player1Positions} positions2={player2Positions} />}
-            </div>
+            <GameAnimationPage player1Positions={player1Positions} player2Positions={player2Positions}/>
+            <OptimalPoliciesPage arrows={arrowsOptimalPolicies}/>
         </CollapsibleSection>
     );
 }
 
-export default GameAnimationPage;
+export default OptimalPoliciesVisualizationPage;

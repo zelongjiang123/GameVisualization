@@ -38,7 +38,7 @@ const OptimalPoliciesPage: React.FC<OptimalPoliciesPageProps> = ({
   arrows,
 }) => {
   return (
-    <CollapsibleSection title="Optimal Policies">
+    <CollapsibleSection title="Optimal Policies By Step">
       <div className="optimal-policiesPage">
         <div>
           {arrows.map((arrow, index) => {

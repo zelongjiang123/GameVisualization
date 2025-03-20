@@ -4,7 +4,6 @@ import { Arrow, JointStrategy, StrategiesGivenOpponentPosition, Strategy } from 
 interface GetGameResultResponse {
     arrowsOptimalPolicies: Arrow[][];
     strategiesGivenOpponentPosition: StrategiesGivenOpponentPosition[][];
-    positionsForAllPlayers: [number, number][][];
     arrowsJointStrategies: Arrow[][][],
     jointStrategiesMap: Map<string, JointStrategy>;
 }
@@ -48,7 +47,6 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
             let result: GetGameResultResponse = {
                 arrowsOptimalPolicies: [],
                 strategiesGivenOpponentPosition: [],
-                positionsForAllPlayers: [],
                 arrowsJointStrategies: [],
                 jointStrategiesMap: new Map(),
             };
@@ -135,7 +133,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
 
                         }
 
-                        result = { arrowsOptimalPolicies, strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], positionsForAllPlayers, arrowsJointStrategies, jointStrategiesMap };
+                        result = { arrowsOptimalPolicies, strategiesGivenOpponentPosition: [strategyListPlayer1, strategyListPlayer2], arrowsJointStrategies, jointStrategiesMap };
                     }
                 } catch (error) {
                     console.error("Error parsing SSE message:", error);

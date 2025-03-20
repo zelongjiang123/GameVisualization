@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import OptimalPoliciesPage from './pages/optimal_policies_page/OptimalPoliciesPage';
+import OptimalPoliciesPage from './pages/optimal_policies_visualization_page/OptimalPoliciesPage';
 import OptimalStrategiesPage from './pages/optimal_strategies_page/OptimalStrategiesPage';
 import NodesGraph from './components/NodesGraph';
 import { getGameResult } from './api_calls/apiCall';
 import { Arrow, JointStrategy, StrategiesGivenOpponentPosition } from './components/configs';
 import LoadingPage from './pages/loading_page/LoadingPage';
-import GameAnimationPage from './pages/game_animation_page/GameAnimationPage';
+import GameAnimationPage from './pages/optimal_policies_visualization_page/GameAnimationPage';
 import GameInput from './pages/game_input_page/GameInput';
 import { GameInputContext } from './contexts/GameInputContext';
 import JointStrategiesPage from './pages/joint_strategies_page/JointStrategiesPage';
 import Instruction from './pages/instruction_page/Instruction';
 import { join } from 'path';
+import OptimalPoliciesVisualizationPage from './pages/optimal_policies_visualization_page/OptimalPoliciesVisualizationPage';
 
 function App() {
   const [arrowsOptimalPolicies, setArrowsOptimalPolicies] = useState<Arrow[][]>([]);
@@ -55,9 +56,7 @@ function App() {
         <div>
           
         </div>
-        
-        <GameAnimationPage jointStrategiesMap={jointStrategiesMap}/>
-        <OptimalPoliciesPage arrows={arrowsOptimalPolicies}/>
+        <OptimalPoliciesVisualizationPage jointStrategiesMap={jointStrategiesMap}/>
         <JointStrategiesPage arrows={arrowsJointStrategies}/>
         <OptimalStrategiesPage strategies={strategiesGivenOpponentPosition} />
       </div>

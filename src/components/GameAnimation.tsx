@@ -42,10 +42,11 @@ const GameAnimation: React.FC<GameAnimationProps> = ({ positions1, positions2 })
       const t = Math.min(elapsed / adjustedSpeed, 1);
 
       if (index < positions1.length - 1) {
-        const [x1Start, y1Start] = positions1[index];
-        const [x1End, y1End] = positions1[index + 1];
-        const [x2Start, y2Start] = positions2[index];
-        const [x2End, y2End] = positions2[index + 1];
+        // row index is y, column index is x
+        const [y1Start, x1Start] = positions1[index];
+        const [y1End, x1End] = positions1[index + 1];
+        const [y2Start, x2Start] = positions2[index];
+        const [y2End, x2End] = positions2[index + 1];
 
         const x1 = (1 - t) * x1Start + t * x1End;
         const y1 = (1 - t) * y1Start + t * y1End;

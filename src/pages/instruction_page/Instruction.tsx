@@ -21,6 +21,12 @@ const Instruction = () => {
         <p>
           <strong>To start the game solver</strong>, please input a valid <strong>Crash Value</strong>, <strong>Discount Rate</strong>, and the <strong>reward matrix</strong>.
           Note that in each cell of the reward matrix, the first input box is the reward for <strong>Player 1</strong>, and the second input box is the reward for <strong>Player 2</strong>.
+        </p>
+        <p>
+          The default game mode is <strong>Zero Sum</strong>. For example, if player 1 is at (r1, c1) and player 2 is at (r2, c2), then the reward will be R1[r1][c1] - R2[r2][c2] for player 1 and R2[r2][c2] - R1[r1][c1] for player 2. 
+          R1[r1][c1] and R2[r2][c2] are the value you put in the reward matrix. You can change the game mode to <strong>General Sum</strong>. Under this mode, if player 1 is at (r1, c1) and player 2 is at (r2, c2), then the reward will be R1[r1][c1] for player 1 and R2[r2][c2] for player 2.
+        </p>
+        <p>
           Once you've entered the required values, click the <strong>"Fetch Data"</strong> button and wait approximately <strong>10 minutes</strong> for the results.
         </p>
       </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Instruction.less';
-import CollapsibleSection from '../../components/CollapsibleSection';
+import CollapsibleSection from '../../components/utils/CollapsibleSection';
 
 const Instruction = () => {
   return (

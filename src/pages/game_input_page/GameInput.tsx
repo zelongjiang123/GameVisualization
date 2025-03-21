@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./GameInput.less"
 import { GameInputContext } from "../../contexts/GameInputContext";
-import CollapsibleSection from "../../components/CollapsibleSection";
+import CollapsibleSection from "../../components/utils/CollapsibleSection";
 
 interface GameInputProps {
   onFetchData: () => void,

@@ -1,4 +1,4 @@
-import CollapsibleSection from '../../components/CollapsibleSection';
+import CollapsibleSection from '../../components/utils/CollapsibleSection';
 import { Arrow, HighlightCell, player1Color, player2Color, StrategiesGivenOpponentPosition } from '../../components/configs';
 import MatrixGrid from '../../components/MatrixGrid';
 

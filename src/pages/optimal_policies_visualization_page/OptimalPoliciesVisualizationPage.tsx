@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CollapsibleSection from "../../components/CollapsibleSection";
+import CollapsibleSection from "../../components/utils/CollapsibleSection";
 import GameAnimation from "../../components/GameAnimation";
 import { Arrow, JointStrategy } from "../../components/configs";
 import OptimalPoliciesPage from "./OptimalPoliciesPage";

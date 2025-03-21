@@ -46,7 +46,7 @@ const OptimalPoliciesVisualizationPage: React.FC<OptimalPoliciesVisualizationPag
                         cumulative += transition.probability;
                         if(random < cumulative) {
                             let nextRow = transition.nextPositions[0], nextCol = transition.nextPositions[1];
-                            if(player == 0){
+                            if(player === 0){
                                 positionsStr = `${nextRow},${nextCol},`;
                                 player1Positions.push([nextRow, nextCol]);
                             } else {

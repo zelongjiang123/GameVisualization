@@ -29,3 +29,5 @@ export interface JointStrategy {
     positions: number[][],
     transitions: {positions: number[], nextPositions: number[], probability: number}[][]
 }
+
+export type GameType = "Zero Sum" | "General Sum";

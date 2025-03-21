@@ -1,4 +1,4 @@
-import { Arrow, JointStrategy, StrategiesGivenOpponentPosition, Strategy } from "../components/configs";
+import { Arrow, GameType, JointStrategy, StrategiesGivenOpponentPosition, Strategy } from "../components/configs";
 
 
 interface GetGameResultResponse {
@@ -11,7 +11,7 @@ const server_url_local = "http://localhost:5000";
 // const server_url = "https://game-solver-backend.onrender.com";
 const server_url = "https://www.zelongjiang.cc";
 
-export async function getGameResult(rewardMatrix: number[][][], crashValue: number, discountRate: number, onMessage: (message: string) => void): Promise<GetGameResultResponse> {
+export async function getGameResult(rewardMatrix: number[][][], crashValue: number, discountRate: number, gameType: GameType, onMessage: (message: string) => void): Promise<GetGameResultResponse> {
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -27,6 +27,7 @@ export async function getGameResult(rewardMatrix: number[][][], crashValue: numb
                 rewardMatrix,
                 crashValue,
                 discountRate,
+                gameType,
             }
 
             const response = await fetch(`${server_url_local}/api/start_game`, {

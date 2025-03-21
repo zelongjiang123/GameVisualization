@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import "./GameInput.less"
 import { GameInputContext } from "../../contexts/GameInputContext";
 import CollapsibleSection from "../../components/utils/CollapsibleSection";
+import OptionSelector from "../../components/utils/OptionSelector";
+import { GameType } from "../../components/configs";
 
 interface GameInputProps {
   onFetchData: () => void,
@@ -37,6 +39,11 @@ const GameInput: React.FC<GameInputProps> = ({
     context.setDiscountRateCallback(numericValue);
   }
 
+  const handleGameTypeChange = (value: string) => {
+    let type: GameType = value as GameType;
+    context.setGameTypeCallback(type);
+  }
+
   return (
     <CollapsibleSection title="Game Input">
       <div className="game-input">
@@ -62,6 +69,7 @@ const GameInput: React.FC<GameInputProps> = ({
               style={{ width: "40px", textAlign: "center" }}
             />
           </div>
+          <OptionSelector options={["Zero Sum", "General Sum"]} onSelect={(selected) => handleGameTypeChange(selected)} defaultOption={"Zero Sum"}/>
         </div>
         <label>Reward Matrix</label>
         <div className="game-input-matrix-container">

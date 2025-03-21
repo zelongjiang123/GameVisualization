@@ -5,7 +5,7 @@ import OptimalPoliciesPage from './pages/optimal_policies_visualization_page/Opt
 import OptimalStrategiesPage from './pages/optimal_strategies_page/OptimalStrategiesPage';
 import NodesGraph from './components/NodesGraph';
 import { getGameResult } from './api_calls/apiCall';
-import { Arrow, JointStrategy, StrategiesGivenOpponentPosition } from './components/configs';
+import { Arrow, GameType, JointStrategy, StrategiesGivenOpponentPosition } from './components/configs';
 import LoadingPage from './pages/loading_page/LoadingPage';
 import GameAnimationPage from './pages/optimal_policies_visualization_page/GameAnimationPage';
 import GameInput from './pages/game_input_page/GameInput';
@@ -20,6 +20,7 @@ function App() {
   const [strategiesGivenOpponentPosition, setStrategiesGivenOpponentPosition] = useState<StrategiesGivenOpponentPosition[][]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [gameType, setGameType] = useState<GameType>("Zero Sum");
   const [jointStrategiesMap, setJointStrategiesMap] = useState<Map<string, JointStrategy>>(new Map());
 
    const initialMatrix = Array(3)
@@ -35,7 +36,7 @@ function App() {
     console.log("click");
     setMessage("");
     setLoading(true);
-    let {jointStrategiesMap, strategiesGivenOpponentPosition, arrowsJointStrategies} = await getGameResult(rewardMatrix, crashValue, discountRate, (message) => setMessage(message));
+    let {jointStrategiesMap, strategiesGivenOpponentPosition, arrowsJointStrategies} = await getGameResult(rewardMatrix, crashValue, discountRate, gameType,(message) => setMessage(message));
     setStrategiesGivenOpponentPosition(strategiesGivenOpponentPosition);
     setArrowsJointStrategies(arrowsJointStrategies);
     setJointStrategiesMap(jointStrategiesMap);
@@ -47,7 +48,7 @@ function App() {
       { !loading && 
       <div className='content'>
         <Instruction/>
-        <GameInputContext.Provider value={{rewardMatrix, setRewardMatrixCallback: (matrix) => setRewardMatrix(matrix), crashValue, setCrashValueCallback: (value) => setCrashValue(value), discountRate, setDiscountRateCallback: (value) => setDiscountRate(value)}}>
+        <GameInputContext.Provider value={{gameType, setGameTypeCallback: (value) => {setGameType(value)}, rewardMatrix, setRewardMatrixCallback: (matrix) => setRewardMatrix(matrix), crashValue, setCrashValueCallback: (value) => setCrashValue(value), discountRate, setDiscountRateCallback: (value) => setDiscountRate(value)}}>
           <GameInput onFetchData={handleButtonClick}/>
         </GameInputContext.Provider>
 

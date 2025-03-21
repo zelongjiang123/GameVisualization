@@ -1,8 +1,11 @@
-# Getting Started with Create React App
+# Game Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This program is hosted at [Game Visualizer](https://zelongjiang123.github.io/GameVisualization/).
+## Some related repository 
+- The source code of the [backend](https://github.com/zelongjiang123/DirectedResearchAI)
+- The deployed version of the [backend](https://github.com/zelongjiang123/GameSolverDeployment)
 
-## Available Scripts
+## How to run the program locally
 
 In the project directory, you can run:
 

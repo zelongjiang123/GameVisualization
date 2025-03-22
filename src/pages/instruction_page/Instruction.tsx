@@ -27,7 +27,7 @@ const Instruction = () => {
           R1[r1][c1] and R2[r2][c2] are the value you put in the reward matrix. You can change the game mode to <strong>General Sum</strong>. Under this mode, if player 1 is at (r1, c1) and player 2 is at (r2, c2), then the reward will be R1[r1][c1] for player 1 and R2[r2][c2] for player 2.
         </p>
         <p>
-          Once you've entered the required values, click the <strong>"Fetch Data"</strong> button and wait approximately <strong>10 minutes</strong> for the results.
+          Once you've entered the required values, click the <strong>"Fetch Data"</strong> button and wait approximately <strong>10 minutes</strong> for the results. After the calculation finishes, you can input the proper starting positions of both players and click <strong>"Recalculate Optimal Policy"</strong> to see the optimal policy.
         </p>
       </div>
     </CollapsibleSection>
